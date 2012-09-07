@@ -1,0 +1,14 @@
+{
+  'to-220': {
+    image: {
+      width: 218,
+      height: 599
+    }
+  }
+  ,'sot-23': {
+    image: {
+      width: 271,
+      height: 219
+    }
+  }
+}
