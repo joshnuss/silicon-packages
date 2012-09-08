@@ -4,40 +4,36 @@
       "dimensions": {
         "width": 3.04,
         "height": 2.64
-      },
-      "image": {
-        "width": 271, 
-        "height": 219
       }
     }
     ,"to-92": {
       "dimensions": {
         "width": 4.7,
         "height": 20.31 
-      },
-      "image": {
-        "width": 151,
-        "height": 265
       }
     }  
     ,"to-126": {
       "dimensions": {
         "width": 7.8,
         "height": 26.70 
-      },
-      "image": {
-        "width": 85,
-        "height": 298
+      }
+    }  
+    ,"to-218": {
+      "dimensions": {
+        "width": 15.7,
+        "height": 38.1 
       }
     }  
     ,"to-220": {
       "dimensions": {
         "width": 10.67,
         "height": 31.24 
-      },
-      "image": {
-        "width": 218,
-        "height": 599
+      }
+    }  
+    ,"to-247": {
+      "dimensions": {
+        "width": 15.9,
+        "height": 41.40 
       }
     }  
   }

@@ -69,13 +69,16 @@ jQuery ($) ->
       addHorizontalDimension(paper, last_x, last_y-10, width, transistor.dimensions.width)
 
       text_name = paper.text(last_x + (width/2), last_y + height + 20, name.toUpperCase())
+      text_name.attr(fill: '#888')
       text_box = text_name.getBBox()
       scale_factor = width/text_box.width
-      console.log(text_box.width)
-      text_name.scale(scale_factor)
+      text_name.scale(scale_factor-0.3)
 
-
-      paper.setFinish()
+      st = paper.setFinish()
+      st.mouseover ->
+        text_name.animate({fill: '#222'}, 200)
+      st.mouseout ->
+        text_name.animate({fill: '#888'}, 200)
 
       last_x += width + PIXELS_PER_MM*3
     )
