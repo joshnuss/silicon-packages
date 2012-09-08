@@ -11,6 +11,38 @@ loadTransistors = (callback) ->
 
   $.get('/transistors.json', success, 'json')
 
+addDimension = (line, bar1, bar2, text) ->
+  line.attr(fill: '#ddd', stroke: 'none')
+  line.node.draggable = false
+
+  bar1.attr(fill: '#ddd', stroke: 'none')
+  bar1.node.draggable = false
+
+  bar2.attr(fill: '#ddd', stroke: 'none')
+  bar2.node.draggable = false
+
+  text.scale(0.8)
+  text.attr('fill','#222')
+  text.node.draggable = false
+
+addHorizontalDimension = (paper, x, y, width, dimension)->
+  line  = paper.rect(x, y, width, 1)
+  left  = paper.rect(x, y - 5, 1, 12)
+  right = paper.rect(width + x, y - 5, 1, 12)
+  text  = paper.text(x + (width/2), y-5, dimension)
+
+  addDimension(line, left, right, text)
+
+addVerticalDimension = (paper, x, y, height, dimension)->
+  line   = paper.rect(x + 10, y, 1, height)
+  top    = paper.rect(x + 5, y, 12, 1)
+  bottom = paper.rect(x + 5, y + height - 2, 12, 1)
+  text   = paper.text(x + 18, y + ( height/2 ), dimension)
+
+  text.rotate(90)
+
+  addDimension(line, top, bottom, text)
+
 jQuery ($) -> 
   paper = Raphael('container')
   zpd = new RaphaelZPD(paper, zoom: true, pan: true, drag: true)
@@ -19,58 +51,22 @@ jQuery ($) ->
 
   last_x = 20
   last_y = 20
+  max_height = 0
 
   loadTransistors (transistors) ->
     $.each(transistors, (name) ->
       transistor = transistors[name]
       width = transistor.dimensions.width * PIXELS_PER_MM
       height = transistor.dimensions.height * PIXELS_PER_MM
+      max_height = height if height > max_height
 
       paper.setStart()
 
       image = paper.image("/images/transistors/" + name + ".png", last_x, last_y, width, height)
       image.node.draggable = false
 
-      line_vert = paper.rect(width + last_x + 10, last_y, 1, height)
-      line_vert.attr('fill','#ddd')
-      line_vert.attr('stroke','none')
-      line_vert.node.draggable = false
-
-      bar_top = paper.rect(width + last_x + 5, last_y, 12, 1)
-      bar_top.attr('fill','#ddd')
-      bar_top.attr('stroke','none')
-      bar_top.node.draggable = false
-
-      bar_bottom = paper.rect(width + last_x + 5, last_y + height - 2, 12, 1)
-      bar_bottom.attr('fill','#ddd')
-      bar_bottom.attr('stroke','none')
-      bar_bottom.node.draggable = false
-
-      text_vert = paper.text(width + last_x + 14, last_y + ( height/2 ), transistor.dimensions.height)
-      text_vert.scale(0.7)
-      text_vert.attr('fill','#222')
-      text_vert.rotate(90)
-      text_vert.node.draggable = false
-
-      line_horz = paper.rect(last_x, last_y - 10, width, 1)
-      line_horz.attr('fill','#ddd')
-      line_horz.attr('stroke','none')
-      line_horz.node.draggable = false
-
-      bar_left = paper.rect(last_x, last_y - 5 - 10, 1, 12)
-      bar_left.attr('fill','#ddd')
-      bar_left.attr('stroke','none')
-      bar_left.node.draggable = false
-
-      bar_right = paper.rect(width + last_x, last_y - 5 - 10, 1, 12)
-      bar_right.attr('fill','#ddd')
-      bar_right.attr('stroke','none')
-      bar_right.node.draggable = false
-
-      text_horz = paper.text(last_x + (width/2), last_y - 14, transistor.dimensions.width)
-      text_horz.scale(0.7)
-      text_horz.attr('fill','#222')
-      text_horz.node.draggable = false
+      addVerticalDimension(paper, last_x+width, last_y, height, transistor.dimensions.width)
+      addHorizontalDimension(paper, last_x, last_y-10, width, transistor.dimensions.width)
 
       text_name = paper.text(last_x + (width/2), last_y + height + 20, name.toUpperCase())
 
@@ -78,4 +74,6 @@ jQuery ($) ->
 
       last_x += width + PIXELS_PER_MM*3
     )
+
+    paper.setSize($('#container').width(), max_height + 100)
 
