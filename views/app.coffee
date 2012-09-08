@@ -1,5 +1,7 @@
+PIXELS_PER_MM = 10
+
 setupPenny = (paper) ->
-  penny = paper.image("/images/penny.png", 600, 0, 100, 100)
+  penny = paper.image("/images/penny.png", 600, 0, 19 * PIXELS_PER_MM, 19 * PIXELS_PER_MM)
   penny.attr(cursor: 'move')
   penny.node.draggable = true
 
@@ -17,13 +19,12 @@ jQuery ($) ->
 
   last_x = 20
   last_y = 20
-  pixels_per_mm = 70
 
   loadTransistors (transistors) ->
     $.each(transistors, (name) ->
       transistor = transistors[name]
-      width = transistor.dimensions.width * pixels_per_mm
-      height = transistor.dimensions.height * pixels_per_mm
+      width = transistor.dimensions.width * PIXELS_PER_MM
+      height = transistor.dimensions.height * PIXELS_PER_MM
 
       paper.setStart()
 
@@ -73,6 +74,6 @@ jQuery ($) ->
 
       paper.setFinish()
 
-      last_x += width + pixels_per_mm/2
+      last_x += width + PIXELS_PER_MM*3
     )
 
