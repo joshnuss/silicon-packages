@@ -1,7 +1,10 @@
 PIXELS_PER_MM = 10
 
 setupPenny = (paper) ->
-  penny = paper.image("/images/penny.png", 600, 0, 19 * PIXELS_PER_MM, 19 * PIXELS_PER_MM)
+  size = 19 * PIXELS_PER_MM
+  x = $(window).width() - size - 100 
+  y = 100
+  penny = paper.image("/images/penny.png", x, y, size, size)
   penny.attr(cursor: 'move')
   penny.node.draggable = true
 
