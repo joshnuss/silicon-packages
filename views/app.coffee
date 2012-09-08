@@ -22,14 +22,14 @@ addDimension = (line, bar1, bar2, text) ->
   bar2.node.draggable = false
 
   text.scale(0.8)
-  text.attr('fill','#222')
+  text.attr('fill','#222', 'font-size': '12px')
   text.node.draggable = false
 
 addHorizontalDimension = (paper, x, y, width, dimension)->
   line  = paper.rect(x, y, width, 1)
   left  = paper.rect(x, y - 5, 1, 12)
   right = paper.rect(width + x, y - 5, 1, 12)
-  text  = paper.text(x + (width/2), y-5, dimension)
+  text  = paper.text(x + (width/2), y-5, dimension + "mm")
 
   addDimension(line, left, right, text)
 
@@ -37,7 +37,7 @@ addVerticalDimension = (paper, x, y, height, dimension)->
   line   = paper.rect(x + 10, y, 1, height)
   top    = paper.rect(x + 5, y, 12, 1)
   bottom = paper.rect(x + 5, y + height - 2, 12, 1)
-  text   = paper.text(x + 18, y + ( height/2 ), dimension)
+  text   = paper.text(x + 18, y + ( height/2 ), dimension + "mm")
 
   text.rotate(90)
 
@@ -69,6 +69,11 @@ jQuery ($) ->
       addHorizontalDimension(paper, last_x, last_y-10, width, transistor.dimensions.width)
 
       text_name = paper.text(last_x + (width/2), last_y + height + 20, name.toUpperCase())
+      text_box = text_name.getBBox()
+      scale_factor = width/text_box.width
+      console.log(text_box.width)
+      text_name.scale(scale_factor)
+
 
       paper.setFinish()
 
