@@ -2,18 +2,38 @@
   "transistors": {
     "sot-23": {
       "dimensions": {
-        "width": 0.115,
-        "height": 0.091
+        "width": 3.04,
+        "height": 2.64
       },
       "image": {
         "width": 271, 
         "height": 219
       }
     }
+    ,"to-92": {
+      "dimensions": {
+        "width": 4.7,
+        "height": 20.31 
+      },
+      "image": {
+        "width": 151,
+        "height": 265
+      }
+    }  
+    ,"to-126": {
+      "dimensions": {
+        "width": 7.8,
+        "height": 26.70 
+      },
+      "image": {
+        "width": 85,
+        "height": 298
+      }
+    }  
     ,"to-220": {
       "dimensions": {
-        "width": 1.067,
-        "height": 3.124 
+        "width": 10.67,
+        "height": 31.24 
       },
       "image": {
         "width": 218,
