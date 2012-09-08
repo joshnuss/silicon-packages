@@ -1,5 +1,8 @@
 PIXELS_PER_MM = 10
 
+dimensions = []
+names = []
+
 setupPenny = (paper) ->
   size = 19 * PIXELS_PER_MM
   x = $(window).width() - size - 100 
@@ -16,7 +19,27 @@ setupPenny = (paper) ->
       penny.animate({opacity: 1, width: size, height: size}, 400, 'elastic')
     $link.toggleClass('selected')
 
+toggleAll = (list, display) =>
+  $(list).each (i,item) ->
+    if display
+      item.animate({opacity: 0}, 400, 'elastic')
+    else
+      item.animate({opacity: 1}, 400, 'elastic')
     
+toggleDimensions = ->
+  $link = $('navbar a.dimension')
+  toggleAll(dimensions, $link.hasClass('selected'))
+  $link.toggleClass('selected')
+  
+toggleNames = ->
+  $link = $('navbar a.name')
+  toggleAll(names, $link.hasClass('selected'))
+  $link.toggleClass('selected')
+
+setupToolbar = ->
+  $('navbar')
+    .find('a.dimension').click(toggleDimensions).end()
+    .find('a.name').click(toggleNames).end()
 
 loadTransistors = (callback) ->
   success = (data) ->
@@ -25,18 +48,23 @@ loadTransistors = (callback) ->
   $.get('/transistors.json', success, 'json')
 
 addDimension = (line, bar1, bar2, text) ->
-  line.attr(fill: '#ddd', stroke: 'none')
+  attrs = {fill: '#ddd', stroke: 'none', opacity: 0}
+
+  line.attr(attrs)
   line.node.draggable = false
 
-  bar1.attr(fill: '#ddd', stroke: 'none')
+  bar1.attr(attrs)
   bar1.node.draggable = false
 
-  bar2.attr(fill: '#ddd', stroke: 'none')
+  bar2.attr(attrs)
   bar2.node.draggable = false
 
   text.scale(0.8)
+  text.attr(attrs)
   text.attr('fill','#222', 'font-size': '12px')
   text.node.draggable = false
+
+  dimensions.push(line, bar1, bar2, text)
 
 addHorizontalDimension = (paper, x, y, width, dimension)->
   line  = paper.rect(x, y, width, 1)
@@ -61,6 +89,7 @@ jQuery ($) ->
   zpd = new RaphaelZPD(paper, zoom: true, pan: true, drag: true)
 
   setupPenny(paper)
+  setupToolbar()
 
   last_x = 20
   last_y = 20
@@ -82,10 +111,12 @@ jQuery ($) ->
       addHorizontalDimension(paper, last_x, last_y-10, width, transistor.dimensions.width)
 
       text_name = paper.text(last_x + (width/2), last_y + height + 20, name.toUpperCase())
-      text_name.attr(fill: '#888')
+      text_name.attr(opacity: 0, fill: '#888')
       text_box = text_name.getBBox()
       scale_factor = width/text_box.width
       text_name.scale(scale_factor-0.3)
+
+      names.push(text_name)
 
       st = paper.setFinish()
       st.mouseover ->
