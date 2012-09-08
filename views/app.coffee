@@ -72,6 +72,8 @@ jQuery ($) ->
       text_horz.attr('fill','#222')
       text_horz.node.draggable = false
 
+      text_name = paper.text(last_x + (width/2), last_y + height + 20, name.toUpperCase())
+
       paper.setFinish()
 
       last_x += width + PIXELS_PER_MM*3
