@@ -5,8 +5,18 @@ setupPenny = (paper) ->
   x = $(window).width() - size - 100 
   y = 100
   penny = paper.image("/images/penny.png", x, y, size, size)
-  penny.attr(cursor: 'move')
+  penny.attr(cursor: 'move', opacity: 0, width: 0, height: 0)
   penny.node.draggable = true
+
+  $link = $('navbar a.penny')
+  $link.click ->
+    if $link.hasClass('selected')
+      penny.animate({opacity: 0, width: 0, height: 0}, 400, 'elastic')
+    else
+      penny.animate({opacity: 1, width: size, height: size}, 400, 'elastic')
+    $link.toggleClass('selected')
+
+    
 
 loadTransistors = (callback) ->
   success = (data) ->
