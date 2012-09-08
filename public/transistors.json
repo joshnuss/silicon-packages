@@ -1,14 +1,24 @@
 {
-  'to-220': {
-    image: {
-      width: 218,
-      height: 599
+  "transistors": {
+    "sot-23": {
+      "dimensions": {
+        "width": 0.115,
+        "height": 0.091
+      },
+      "image": {
+        "width": 271, 
+        "height": 219
+      }
     }
-  }
-  ,'sot-23': {
-    image: {
-      width: 271,
-      height: 219
-    }
+    ,"to-220": {
+      "dimensions": {
+        "width": 1.067,
+        "height": 3.124 
+      },
+      "image": {
+        "width": 218,
+        "height": 599
+      }
+    }  
   }
 }
