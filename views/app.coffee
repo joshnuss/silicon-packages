@@ -86,5 +86,5 @@ jQuery ($) ->
       last_x += width + PIXELS_PER_MM*3
     )
 
-    paper.setSize($('#container').width(), max_height + 100)
+    paper.setSize($('#container').width(), Math.max(max_height + 100, $(window).height()-$('header').height()))
 
